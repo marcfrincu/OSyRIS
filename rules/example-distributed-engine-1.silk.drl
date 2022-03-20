@@ -1,0 +1,112 @@
+package osyris.workflow0
+
+# This file was automatically generated using the SILK2Drools class
+# part of the OSyRIS Workflow Engine developed at
+# the West University of Timisoara, Faculty of Mathematics and Computer Science Romania
+# For questions and/or remarks mail to: mfrincu@info.uvt.ro
+
+import osyris.workflow.State;
+import osyris.workflow.WFResource;
+import org.apache.log4j.Logger;
+import osyris.workflow.Runner;
+
+global org.apache.log4j.Logger log;
+global java.util.ArrayList runner;
+
+rule "0"
+	no-loop false
+	when
+		$state0 : State ( index == 0 )
+		eval ( $state0.getNoInstances() > 0 )
+		$state2 : State ( index == 2 )
+	then
+		log.debug("Firing rule: "+0);
+		((Runner)runner.get(0)).clearAllStates();
+		modify( $state0 )  { decrementNoInstances() };
+		$state2.setInput("i1", $state0.getOutput("o1"), 0 );
+		$state2.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(0)).addState( $state2 );
+		((Runner)runner.get(0)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+
+rule "1"
+	no-loop false
+	when
+		$state2 : State ( index == 2 )
+		eval ( $state2.getNoInstances() > 0 )
+		eval ( $state2.getOutput("o2").toString().compareTo("true") == 0  )
+		$state4 : State ( index == 4 )
+		eval ( $state4.getNoInstances() > 0 )
+		$state3 : State ( index == 3 )
+	then
+		log.debug("Firing rule: "+1);
+		((Runner)runner.get(1)).clearAllStates();
+		modify( $state2 )  { decrementNoInstances() };
+		modify( $state4 )  { decrementNoInstances() };
+		$state4.setInput("i2", $state4.getOutput("o1"), 4 );
+		$state4.setNoInstancesToBeCreated( 1 );
+		$state4.setInput("i1", $state2.getOutput("o1"), 2 );
+		$state4.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(1)).addState( $state4 );
+		$state3.setInput("i1", $state2.getOutput("o1"), 2 );
+		$state3.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(1)).addState( $state3 );
+		((Runner)runner.get(1)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+
+rule "2"
+	no-loop false
+	when
+		$state2 : State ( index == 2 )
+		eval ( $state2.getNoInstances() > 0 )
+		eval ( $state2.getOutput("o2").toString().compareTo("false") == 0  )
+		$state3 : State ( index == 3 )
+	then
+		log.debug("Firing rule: "+2);
+		((Runner)runner.get(2)).clearAllStates();
+		modify( $state2 )  { decrementNoInstances() };
+		$state3.setInput("i1", $state2.getOutput("o1"), 2 );
+		$state3.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(2)).addState( $state3 );
+		((Runner)runner.get(2)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+
+rule "3"
+	no-loop false
+	when
+		$state3 : State ( index == 3 )
+		eval ( $state3.getNoInstances() > 0 )
+		eval ( Double.parseDouble( $state3.getOutput("o1").toString() ) < 2 )
+		$state0 : State ( index == 0 )
+	then
+		log.debug("Firing rule: "+3);
+		((Runner)runner.get(3)).clearAllStates();
+		modify( $state3 )  { decrementNoInstances() };
+		$state0.setInput("i1", $state3.getOutput("o1"), 3 );
+		$state0.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(3)).addState( $state0 );
+		((Runner)runner.get(3)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+
+rule "4"
+	no-loop false
+	when
+		$state3 : State ( index == 3 )
+		eval ( $state3.getNoInstances() > 0 )
+		eval ( Double.parseDouble( $state3.getOutput("o1").toString() ) >= 2 )
+		$state5 : State ( index == 5 )
+	then
+		log.debug("Firing rule: "+4);
+		((Runner)runner.get(4)).clearAllStates();
+		modify( $state3 )  { decrementNoInstances() };
+		$state5.setInput("i1", $state3.getOutput("o1"), 3 );
+		$state5.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(4)).addState( $state5 );
+		((Runner)runner.get(4)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+

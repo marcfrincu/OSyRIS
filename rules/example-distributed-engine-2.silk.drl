@@ -1,0 +1,49 @@
+package osyris.workflow0
+
+# This file was automatically generated using the SILK2Drools class
+# part of the OSyRIS Workflow Engine developed at
+# the West University of Timisoara, Faculty of Mathematics and Computer Science Romania
+# For questions and/or remarks mail to: mfrincu@info.uvt.ro
+
+import osyris.workflow.State;
+import osyris.workflow.WFResource;
+import org.apache.log4j.Logger;
+import osyris.workflow.Runner;
+
+global org.apache.log4j.Logger log;
+global java.util.ArrayList runner;
+
+rule "0"
+	no-loop false
+	when
+		$state0 : State ( index == 0 )
+		eval ( $state0.getNoInstances() > 0 )
+		$state1 : State ( index == 1 )
+	then
+		log.debug("Firing rule: "+0);
+		((Runner)runner.get(0)).clearAllStates();
+		modify( $state0 )  { decrementNoInstances() };
+		$state1.setInput("i1", $state0.getOutput("o1"), 0 );
+		$state1.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(0)).addState( $state1 );
+		((Runner)runner.get(0)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+
+rule "1"
+	no-loop false
+	when
+		$state1 : State ( index == 1 )
+		eval ( $state1.getNoInstances() > 0 )
+		$state2 : State ( index == 2 )
+	then
+		log.debug("Firing rule: "+1);
+		((Runner)runner.get(1)).clearAllStates();
+		modify( $state1 )  { decrementNoInstances() };
+		$state2.setInput("i1", $state1.getOutput("o1"), 1 );
+		$state2.setNoInstancesToBeCreated( 1 );
+		((Runner)runner.get(1)).addState( $state2 );
+		((Runner)runner.get(1)).executeAll();
+		log.debug("Sent tasks for execution");
+end
+
