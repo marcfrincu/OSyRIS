@@ -1,0 +1,9 @@
+A:=[o1:output, "processing"="com"];
+B:=[i1:input,o1:output,o2:output, "processing"="isprime"];
+C:=[i1:input,i2:input,o1:output, "processing"="com", "remote"="true", "destination"="1"];
+D:=[i1:input,"processing"="end", "isLast"="true"]
+
+# check if number is prime or not
+A[a=o1] -> B[i1=a]
+# send back the answer
+B[b=o1] -> C[i1=b];

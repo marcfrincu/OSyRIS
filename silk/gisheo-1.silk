@@ -1,0 +1,19 @@
+# This workflow example creates a sequence of simple image processing
+# Created by Marc Frincu June 4th 2009. Email: mfrincu@info.uvt.ro
+
+# Initial activation task
+A0:=[o1:output="imageId", "instances"="1"];
+# The following tasks belong to the processing workflow
+A:=[i1:input, o1:output, "processing"="image grayscale(image)", "isFirst"="true"];
+B:=[i1:input, o1:output, "processing"="image equalize-histogram(image)"];
+C:=[i1:input, o1:output, "processing"="image quantization(image)"];
+D:=[i1:input, o1:output, "processing"="image threshold(image)", "isLast"="true"];
+
+# Compute grayscale from the initial image
+A0[a=o1] -> A[i1=a];
+# Compute histogram from the grayscale image
+A[a=o1] -> B[i1=a];
+# Compute quantization from the histogram image
+B[a=o1] -> C[i1=a];
+# Compute threshold from the quantization image
+C[a=o1] -> D[i1=a];

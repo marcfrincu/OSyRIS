@@ -1,0 +1,9 @@
+# This workflow example computes the sum of the first 10 natural numbers by using the loop construct
+# It can be tested by using the DummyServiceExample service
+# Created by Marc Frincu June 4th 2009. Email: mfrincu@info.uvt.ro
+
+A := [i1:input, o1:output=1, "processing"="return-successor", "instances"="1"];
+B := [i1:input, i2:input, o1:output=0, "processing"="add", "instances"="1"];
+
+# Compute the sum and the next number in the list as long as it is smaller than 10
+A[a=o1], B[b=o1] -> B[i1=a#i2=b], A[i1=a] | a < 10;

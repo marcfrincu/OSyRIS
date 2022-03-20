@@ -1,0 +1,21 @@
+# Workflow Tasks:
+
+T_1 := [i1:input, o1:output="ftp://nyx.info.uvt.ro/repo/32c76642-a9b0-4e8a-a562-704f850f944d/90a606bf-54ea-4c24-9bd6-57ac1cea072a/d12d2768-5a93-4f35-b499-0c0fbef6e8af", "processing"="init", "argument-list"="", "instances"="1"];
+T_2 := [i1:input, o1:output, "datagroup"="898964e6-2e4b-4632-8a3d-08ab1a96eb74", "dataset"="d12d2768-5a93-4f35-b499-0c0fbef6e8af", "processing"="outIMG_1 hough_lines (inIMG_1#hough_treshold#min_line#min_gap)", "argument-list"="<hough_treshold=40>#<min_line=40>#<min_gap=50>", "isLast"="true"];
+T_3 := [i1:input, o1:output, "processing"="outIMG_1 grayscale (inIMG_1)"];
+T_4 := [i1:input, o1:output, "processing"="outIMG_1 stretch (inIMG_1)"];
+T_5 := [i1:input, o1:output, "processing"="outIMG_1 bilateral_smoothing (inIMG_1#smooth1#smooth2#smooth3#smooth4)", "argument-list"="<smooth1=5>#<smooth2=5>#<smooth3=3>#<smooth4=50>"];
+T_6 := [i1:input, o1:output, "processing"="outIMG_1 canny (inIMG_1#canny1#canny2#aperture_size)", "argument-list"="<canny1=100>#<canny2=200>#<aperture_size=3>"];
+
+# Workflow Rules: 
+
+# init
+T_1[a=o1] -> T_3[i1=a];
+# grayscale to stretch
+T_3[a=o1] -> T_4[i1=a];
+# stretch to bilateral_smoothing
+T_4[a=o1] -> T_5[i1=a];
+# bilateral_smoothing to canny
+T_5[a=o1] -> T_6[i1=a];
+# canny to hough_lines
+T_6[a=o1] -> T_2[i1=a];

@@ -1,0 +1,24 @@
+# This example shows how some SILK constructs can be used together to form a simple workflow.
+# It can be tested by using the DummyServiceExample service
+# Created by Marc Frincu June 4th 2009. Email: mfrincu@info.uvt.r
+
+# set some initial info for task A0
+A0:=[o1:output=0, "processing"="dummy", "instances"="1" ];
+A:=[o1:output, i1:input, "processing"="return-successor"];
+B:=[o1:output, i1:input, "processing"="return-successor"];
+C:=[o1:output, i1:input, "processing"="return-successor"];
+D:=[o1:output, i1:input, i2:input, "processing"="return-successor"];
+E:=[o1:output, i1:input, i2:input, "processing"="add"];
+F:=[o1:output, i1:input, i2:input, "processing"="add"];
+
+
+# this is the activation rule. A0 can be seen as a dummy task
+A0[a=o1]->A[i1=a];
+# split
+A[a=o1] -> B[i1=a],C[i1=a],D[i1=a];
+# join
+B[b=o1],C[c=o1] -> E[i1=b#i2=c];
+# simulate a loop
+D[d=o1#consume=false] -> A[i1=d] | d<20;
+# simulate end loop or if
+D[d=o1],E[e=o1] -> F[i1=d#i2=e] | d>=20;

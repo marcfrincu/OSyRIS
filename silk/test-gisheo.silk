@@ -1,0 +1,13 @@
+T_1 := [i1:input, o1:output="IMAGE_URL", "dataset"="uuid", "processing"="init", "argument-list"="", "instances"="1"];
+T_2 := [i1:input, o1:output, "processing"="outIMG_1 hough_lines (inIMG_1#hough_treshold#min_line#min_gap#hough_standard)"];
+T_3 := [i1:input, o1:output, "processing"="outIMG_1 grayscale (inIMG_1)"];
+T_4 := [i1:input, o1:output, "processing"="outIMG_1 stretch (inIMG_1)"];
+T_5 := [i1:input, o1:output, "processing"="outIMG_1 bilateral_smoothing (inIMG_1#smooth1#smooth2#smooth3#smooth4)"];
+T_6 := [i1:input, o1:output, "datagroup"="uuid", "processing"="outIMG_1 canny (outIMG_1#canny1#canny2#aperture_size)"];
+
+# Workflow Rules:
+T_1[a=o1] -> T_3[i1=a];
+T_3[a=o1] -> T_4[i1=a];
+T_4[a=o1] -> T_5[i1=a];
+T_5[a=o1] -> T_6[i1=a];
+T_6[a=o1] -> T_2[i1=a];

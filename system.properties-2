@@ -1,0 +1,54 @@
+#########################
+#	Database settings	#
+#########################
+
+# the OSyRIS database
+database = //localhost:5432/osyris
+
+# the database user
+username = postgres
+
+# the database password
+password = postgres
+
+#####################
+#	Engine settings	#
+#####################
+
+# the location of the SiLK files in absolute path
+silk_file_location = /home/marc/workspace/osyris/silk/
+
+# the location of the DROOLS files in absolute path
+drl_file_location = /home/marc/workspace/osyris/rules/
+
+# the location of the log files in absolute path
+log_file_location = /home/marc/workspace/osyris/log/
+
+# the task executor class including package
+executor_class = osyris.samples.distributed.DExecutorExample_Engine_2
+
+# the time limit for waiting the completion of a task
+executor_timeout_limit = 3600000
+
+# true if the rules are to be fired in parallel, false otherwise
+fire_parallel_rules = true
+
+# the engine time limit to wait for the completion of the workflow 
+engine_timeout_limit = 3600000
+
+# the name of the package to be created from the SiLK rules
+drl_package_name = osyris.workflow
+
+# name of the container solution
+container_solution_name = "2"
+
+#######################
+# RabbitMQ Properties #
+#######################
+
+mq_username = guest
+mq_password = guest
+mq_virtual_host = /
+mq_host_name = 127.0.0.1
+mq_port_number = 5672
+mq_msg_batch_size = 1

@@ -1,0 +1,16 @@
+# This workflow example computes the NDVI by using split and join constructs
+# Created by Marc Frincu June 4th 2009. Email: mfrincu@info.uvt.ro
+
+# Initial activation task
+A0:=[o1:output="imageId", "instances"="1"];
+# The following tasks belong to the processing workflow
+A:=[i2:input, o1:output, "processing"="image extract-band(band,image)", "argument-list"="<1,red>", "is-
+First"="true"];
+B:=[i2:input, o1:output, "processing"="image extract-band(band,image)", "argument-list"="<1,infrared>",
+"isFirst"="true"];
+C:=[i1:input, i2:input, o1:output, "processing"="image compute-ndvi(image, image)","isLast"="true"];
+
+# Extract red and infrared bands from the initial image
+A0[a=o1] -> A[i2=a], B[i2=a];
+# Compute NDVI using red and infrared bands
+A[a=o1], B[b=o1] -> C[i1=a#i2=b];

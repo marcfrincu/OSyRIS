@@ -1,0 +1,19 @@
+A:=[i1:input, o1:output=1, "processing"="init", "instances"="1"];
+B:=[i1:input,o1:output, "processing"="com", "remote"="true", "destination"="2"];
+C:=[i1:input,o1:output,o2:output, "processing"="isprime"];
+#C:=[o1:output, o2:output, "processing"="com"];
+D:=[i1:input, o1:output, "processing"="increment"];
+E:=[i1:input,i2:input,o1:output=0, "processing"="sum", "instances"="1"];
+F:=[i1:input,"processing"="end", "isLast"="true"]
+
+
+# check if the number is prime
+#A[a=o1] -> B[i1=a];
+A[a=o1] -> C[i1=a]
+# if it is prime add to existing sum and increment it
+C[c=o1#i=o2], E[e=o1] -> E[i1=c#i2=e], D[i1=c] | i == "true";
+# if it is not prime just increment it
+C[c=o1#i=o2] -> D[i1=c] | i == "false";
+# get the next number
+D[c=o1] -> A[i1=c] | c < 2;
+D[c=o1] -> F[i1=c] | c >= 2;

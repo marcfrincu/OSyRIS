@@ -1,0 +1,6 @@
+T_0 := [i1:input, o1:output="ftp://nyx.info.uvt.ro/repo/32c76642-a9b0-4e8a-a562-704f850f944d/90a606bf-54ea-4c24-9bd6-57ac1cea072a/fe1346c2-cde2-4554-ad75-0f08541c7616", "processing"="init", "argument-list"="", "instances"="1"];
+T_1 := [i1:input, o1:output="ftp://nyx.info.uvt.ro/repo/32c76642-a9b0-4e8a-a562-704f850f944d/e2e9de44-bbd5-437d-9d1c-0c3e14f424de/dd671f03-4531-48aa-92d1-84b55841e93c", "processing"="init", "argument-list"="", "instances"="1"];
+T_2 := [i1:input, o1:output, "datagroup"="898964e6-2e4b-4632-8a3d-08ab1a96eb74", "dataset"="d12d2768-5a93-4f35-b499-0c0fbef6e8af", "processing"="outIMG_1 stretch (inIMG_1)", "isLast"="true"];
+T_3 := [i1:input, o1:output, "datagroup"="898964e6-2e4b-4632-8a3d-08ab1a96eb74", "dataset"="dd671f03-4531-48aa-92d1-84b55841e93c", "processing"="outIMG_1 grayscale (inIMG_1)", "isLast"="true"];
+T_0[a=o1] -> T_2[i1=a];
+T_1[a=o1] -> T_3[i1=a];
