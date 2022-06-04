@@ -24,6 +24,8 @@ The repository contains the following folders and files:
 - **scripts**: some scripts to create the PostgreSQL database.
 - **silk**: example of rule based workflows in SiLK. It includes the silk files corresponding to the two examples in the *rules* folder. It also contains some examples for image processing.
 - **src**: contains all the necessary source code of the engine. In **src/osyris/samples/tests** you can see some examples.
+- **dist**: contains some precompiled jar files of the engine. 
+- **certs**: contains certificates for the client and broker service that can be used as is to enable ssh passwordless connection between the two. 
 
 # License
 
